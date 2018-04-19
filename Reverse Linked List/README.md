@@ -49,4 +49,25 @@ A linked list can be reversed either iteratively or recursively. Could you imple
     }
 ```
 
+### 方法2
+
+和方法1的意思是一样的，只是方法一其实在倒转的过程中有`new ListNode(node.val)`，会占用空间。方法2在迭代的时候用`ListNode tmp = node.next;`来保存下一个要迭代的节点。
+
+```java
+	public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = head;
+        ListNode node = newHead.next;
+        while (null != node) {
+            ListNode tmp = node.next;
+            node.next = newHead;
+            newHead = node;
+            node = tmp;
+        }
+        head.next = null;
+        return newHead;
+    }
+```
 
