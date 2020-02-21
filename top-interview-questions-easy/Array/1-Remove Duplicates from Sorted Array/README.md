@@ -20,11 +20,11 @@ It doesn't matter what you leave beyond the new length.
 
 ## 解题
 
-题目意思就是去除排序好的数组中重复的数字，并且额外的空间复杂度为O(1)
+题目意思就是去除**排序好**的数组中重复的数字，并且额外的空间复杂度为O(1)
 
 ### 方法1
 
-一开始想到的方法就是双重循环遍历数组，如果有相同的，就将该数字移除(`nums[i]=nums[i+1]`
+一开始想到的方法就是双重循环遍历数组，如果有相同的，就将该数字移除(`nums[i]=nums[i+1]`）
 
 ```java
 	public int removeDuplicates(int[] nums) {
@@ -79,5 +79,27 @@ It doesn't matter what you leave beyond the new length.
         }
         return slow + 1;
     }
+```
+
+### 方法3
+
+原理和方法2一样，不过更加简洁好理解。先利用一个变量从1开始记录当前指针的位置，然后遍历数组，如果当前数和前一个数不一样，说明这是“第一个”不重复的数，就把该数移到当前指针的位置，并把指针向后移一位。
+
+```java
+public int removeDuplicates(int[] nums) {
+    if (nums.length == 0 || nums.length == 1) {
+        return nums.length;
+    }
+
+    int current = 1; // 当前指针位置
+    for (int i = 1; i < nums.length; i++) {
+        if (nums[i] != nums[i - 1]) {
+            nums[current] = nums[i];
+            current++;
+        }
+    }
+
+    return current;
+}
 ```
 

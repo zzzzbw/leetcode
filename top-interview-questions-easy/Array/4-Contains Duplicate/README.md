@@ -15,20 +15,19 @@ Given an array of integers, find if the array contains any duplicates. Your func
 查找重复的第一反应就是用哈希表，因为哈希的查找时间为O(1),java中直接用HashSet就可以了。这种时间复杂度就是O(n)。
 
 ```java
-	public boolean containsDuplicate(int[] nums) {
-        int len = nums.length;
-        if (len <= 1) {
-            return false;
-        }
-        Set<Integer> set = new HashSet<>(len);
-        for (int i : nums) {
-            if (set.contains(i)) {
-                return true;
-            }
-            set.add(i);
-        }
+public boolean containsDuplicate(int[] nums) {
+    int len = nums.length;
+    if (len <= 1) {
         return false;
     }
+    Set<Integer> set = new HashSet<>(len);
+    for (int i : nums) {
+        if (!set.add(i)) {
+            return true;
+        }
+    }
+    return false;
+}
 ```
 
 ### 方法2
@@ -36,18 +35,40 @@ Given an array of integers, find if the array contains any duplicates. Your func
 先把数组排序,排序后的数组如果有相同的数字必然相邻，只要看相邻数字有没有相同的就可以了，这种时间负责度有排序算法决定。
 
 ```java
-	public boolean containsDuplicate(int[] nums) {
-        int len = nums.length;
-        if (len <= 1) {
-            return false;
+public boolean containsDuplicate(int[] nums) {
+    int len = nums.length;
+    if (len <= 1) {
+        return false;
+    }
+    Arrays.sort(nums);
+    for (int i = 0; i < len - 1; i++) {
+        if (nums[i] == nums[i + 1]) {
+            return true;
         }
-        sort(nums);// 排序算法,这里就不给具体代码
-        for (int i = 0; i < len - 1; i++) {
-            if (nums[i] == nums[i + 1]) {
+    }
+    return false;
+}
+```
+
+### 方法3
+
+暴力解法，双重遍历查找是否有相同的数字。但这种方法在leetcode上会超时
+
+```java
+public boolean containsDuplicate(int[] nums) {
+    int len = nums.length;
+    if (len <= 1) {
+        return false;
+    }
+
+    for (int i = 0; i < len - 1; i++) {
+        for (int j = i + 1; j < len; j++) {
+            if (nums[i] == nums[j]) {
                 return true;
             }
         }
-        return false;
     }
+    return false;
+}
 ```
 
