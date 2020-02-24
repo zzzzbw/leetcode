@@ -31,6 +31,7 @@ The digits are stored such that the most significant digit is at the head of the
         }
 
         if (flag) {
+            // 如果遍历完还需要进制，则说明这个数为100...的形式，那只要new一个相应长度空的int数组并设置第一位为1，其他为即是0
             int[] result = new int[digits.length + 1];
             result[0] = 1;
             return result;
